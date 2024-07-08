@@ -1,0 +1,101 @@
+{
+  "nodes": [
+    {
+      "nodeKey": "node-1",
+      "labels": [
+        "Movie"
+      ],
+      "properties": [
+        {
+          "name": "name",
+          "value": "Hello world",
+          "type": "string"
+        }
+      ],
+      "variables": [
+        "variable-1"
+      ]
+    },
+    {
+      "nodeKey": "node-2",
+      "labels": [
+        "Person",
+        "Director"
+      ],
+      "properties": [
+        {
+          "name": "name",
+          "value": "Mike",
+          "type": "string"
+        },
+        {
+          "name": "age",
+          "value": 42,
+          "type": "number"
+        }
+      ],
+      "variables": [
+        "variable-2"
+      ]
+    },
+    {
+      "nodeKey": "node-3",
+      "labels": [
+        "Person",
+        "Actor"
+      ],
+      "properties": [
+        {
+          "name": "name",
+          "value": "Jack",
+          "type": "string"
+        },
+        {
+          "name": "age",
+          "value": 28,
+          "type": "number"
+        }
+      ],
+      "variables": [
+        "variable-0"
+      ]
+    },
+    {
+      "nodeKey": "node-4",
+      "labels": [
+        "Person"
+      ],
+      "properties": [
+        {
+          "name": "name",
+          "value": "Merry",
+          "type": "string"
+        },
+        {
+          "name": "age",
+          "value": 32,
+          "type": "number"
+        }
+      ]
+    },
+    {
+      "nodeKey": "node-5",
+      "labels": [
+        "Person",
+        "Watcher"
+      ],
+      "properties": [
+        {
+          "name": "name",
+          "value": "John",
+          "type": "string"
+        },
+        {
+          "name": "age",
+          "value": 14,
+          "type": "number"
+        }
+      ]
+    }
+  ]
+}
