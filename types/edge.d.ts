@@ -6,6 +6,7 @@ export interface Edge {
 }
 
 export interface EdgeStore {
+  relationshipKey: string;
   statement: string;
   targetNode: string;
   sourceNode: string;

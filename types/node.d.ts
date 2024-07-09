@@ -9,6 +9,7 @@ export interface Node {
   outRelationship: string[];
 }
 export interface NodeStore {
+  nodeKey: string;
   statement: string;
   inRelationship: string[];
   outRelationship: string[];

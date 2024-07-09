@@ -5,6 +5,7 @@ const generateEdge = (edges: Edge[]): EdgeStore[] => {
   edges.forEach((edge, index) => {
     const statement: string = `[:${edge.type}]`;
     returnEdges.push({
+      relationshipKey: edge.relationshipKey,
       statement: statement,
       sourceNode: edge.sourceNode,
       targetNode: edge.targetNode,

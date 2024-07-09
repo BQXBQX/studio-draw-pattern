@@ -18,6 +18,7 @@ const generateNode = (nodes: Node[], variables: Variable[]): NodeStore[] => {
     node.properties?.forEach((property, index) => {
       let propertyStatement: string = "";
       propertyStatement += property.name;
+      // 当value为字符串时需要在value的两边加上引号""
       if (typeof property.value === "number") {
         propertyStatement += `:${property.value}`;
       } else {
@@ -28,6 +29,7 @@ const generateNode = (nodes: Node[], variables: Variable[]): NodeStore[] => {
     statement =
       "(" + statement + " {" + `${propertyArray.join(",")}` + "}" + ")";
     returnNodes.push({
+      nodeKey: node.nodeKey,
       statement: statement,
       inRelationship: node.inRelationship,
       outRelationship: node.outRelationship,
