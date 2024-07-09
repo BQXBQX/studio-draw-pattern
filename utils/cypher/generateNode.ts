@@ -1,38 +1,41 @@
-import type { Node, NodeStore } from "../../types/node";
+import type { Node } from "../../types/node";
 import type { Variable } from "../../types/variable";
 
-const generateNode = (nodes: Node[], variables: Variable[]): NodeStore[] => {
-  let returnNodes: NodeStore[] = [];
+const generateNode = (nodes: Node[], variables: Variable[]): Node[] => {
+  let returnNodes: Node[] = [];
   nodes.forEach((node, index) => {
     let statement: string = "";
-    variables.find((variable) => {
-      if (node.variables && variable.variableKey === node.variables[0]) {
+    //  检测当前节点是否有variable,同时拿到variable的name
+    const currentVariable = variables.find(
+      (variable) =>
         // TODO: 这里只完成了每个node只有一个variable的情况
-        statement = statement + String(variable.name);
-      }
-    });
+        node.variables && variable.variableKey === node.variables[0],
+    );
+    statement += currentVariable?.name;
+    // 拿到当前节点的所有的label
     node.labels?.forEach((label, index) => {
       statement = statement + `:${label}`;
     });
-    let propertyArray: string[] = [];
+    // 拿到当前节点的所有的property
+    let propertiesArray: string[] = [];
     node.properties?.forEach((property, index) => {
       let propertyStatement: string = "";
       propertyStatement += property.name;
       // 当value为字符串时需要在value的两边加上引号""
       if (typeof property.value === "number") {
         propertyStatement += `:${property.value}`;
+        // 当value为数字类型时value的两边直接引用不用引号""
       } else {
         propertyStatement += `:"${property.value}"`;
       }
-      propertyArray.push(propertyStatement);
+      propertiesArray.push(propertyStatement);
     });
+    // 将所有的字符串拼接获得当前的节点的字段
     statement =
-      "(" + statement + " {" + `${propertyArray.join(",")}` + "}" + ")";
+      "(" + statement + " {" + `${propertiesArray.join(",")}` + "}" + ")";
     returnNodes.push({
-      nodeKey: node.nodeKey,
+      ...node,
       statement: statement,
-      inRelationship: node.inRelationship,
-      outRelationship: node.outRelationship,
     });
   });
   return returnNodes;

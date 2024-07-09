@@ -1,13 +1,7 @@
 export interface Edge {
-  relationshipKey: string;
+  relationKey: string;
   type: string;
   targetNode: string;
   sourceNode: string;
-}
-
-export interface EdgeStore {
-  relationshipKey: string;
-  statement: string;
-  targetNode: string;
-  sourceNode: string;
+  statement?: string;
 }

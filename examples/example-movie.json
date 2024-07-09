@@ -15,8 +15,8 @@
       "variables": [
         "variable-1"
       ],
-      "outRelationship": [],
-      "inRelationship": [
+      "outRelations": [],
+      "inRelations": [
         "relationship-3",
         "relationship-4",
         "relationship-1",
@@ -44,12 +44,12 @@
       "variables": [
         "variable-2"
       ],
-      "outRelationship": [
+      "outRelations": [
         "relationship-2",
         "relationship-4",
         "relationship-1"
       ],
-      "inRelationship": [
+      "inRelations": [
         "relationship-7",
         "relationship-8"
       ]
@@ -75,11 +75,11 @@
       "variables": [
         "variable-0"
       ],
-      "outRelationship": [
+      "outRelations": [
         "relationship-3",
         "relationship-6"
       ],
-      "inRelationship": [
+      "inRelations": [
         "relationship-2"
       ]
     },
@@ -100,10 +100,10 @@
           "type": "number"
         }
       ],
-      "outRelationship": [
+      "outRelations": [
         "relationship-8"
       ],
-      "inRelationship": [
+      "inRelations": [
         "relationship-6"
       ]
     },
@@ -125,11 +125,11 @@
           "type": "number"
         }
       ],
-      "outRelationship": [
+      "outRelations": [
         "relationship-7",
         "relationship-5"
       ],
-      "inRelationship": []
+      "inRelations": []
     }
   ],
   "variables": [
@@ -155,51 +155,51 @@
       "belongKey": "node-3"
     }
   ],
-  "relationship": [
+  "relations": [
     {
-      "relationshipKey": "relationship-1",
+      "relationKey": "relationship-1",
       "type": "OWNER",
       "targetNode": "node-1",
       "sourceNode": "node-2"
     },
-    {
-      "relationshipKey": "relationship-2",
+    { 
+      "relationKey": "relationship-2",
       "type": "FRIEND",
       "targetNode": "node-3",
       "sourceNode": "node-2"
     },
     {
-      "relationshipKey": "relationship-3",
+      "relationKey": "relationship-3",
       "type": "ACTED_IN",
       "targetNode": "node-1",
       "sourceNode": "node-3"
     },
     {
-      "relationshipKey": "relationship-4",
+      "relationKey": "relationship-4",
       "type": "DIRECTED",
       "targetNode": "node-1",
       "sourceNode": "node-2"
     },
     {
-      "relationshipKey": "relationship-5",
+      "relationKey": "relationship-5",
       "type": "WATCH",
       "targetNode": "node-1",
       "sourceNode": "node-5"
     },
     {
-      "relationshipKey": "relationship-6",
+      "relationKey": "relationship-6",
       "type": "WIFE",
       "targetNode": "node-4",
       "sourceNode": "node-3"
     },
     {
-      "relationshipKey": "relationship-7",
+      "relationKey": "relationship-7",
       "type": "MATHER",
       "targetNode": "node-2",
       "sourceNode": "node-5"
     },
     {
-      "relationshipKey": "relationship-8",
+      "relationKey": "relationship-8",
       "type": "FRIEND",
       "targetNode": "node-2",
       "sourceNode": "node-4"

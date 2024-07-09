@@ -1,11 +1,11 @@
-import type { EdgeStore } from "../../types/edge";
-import type { NodeStore } from "../../types/node";
+import type { Edge } from "../../types/edge";
+import type { Node } from "../../types/node";
 type Direction = "TARGET" | "SOURCE";
-const generateMATCH = (nodes: NodeStore[], edges: EdgeStore[]) => {
+const generateMATCH = (nodes: Node[], edges: Edge[]) => {
   let MATCHs: string[] = [];
   while (edges.length !== 0) {
     const startEdge = edges[0];
-    let MATCH = startEdge.statement;
+    let MATCH: string = startEdge.statement!;
     let returnValue: any = null;
     // 遍历target节点
     returnValue = edgeNext(startEdge, MATCH, "TARGET", nodes, edges);
@@ -29,7 +29,6 @@ const generateMATCH = (nodes: NodeStore[], edges: EdgeStore[]) => {
       while (returnValue !== null) {
         edges = returnValue.edges;
         MATCH = returnValue.MATCH;
-
         returnValue = nodeNext(
           returnValue.nextNode,
           returnValue.MATCH,
@@ -44,16 +43,16 @@ const generateMATCH = (nodes: NodeStore[], edges: EdgeStore[]) => {
   return MATCHs;
 };
 
-const deleteEdge = (edges: EdgeStore[], deleteEdge: EdgeStore): EdgeStore[] => {
+const deleteEdge = (edges: Edge[], deleteEdge: Edge): Edge[] => {
   return edges.filter((edge) => edge !== deleteEdge);
 };
 
 const edgeNext = (
-  edge: EdgeStore,
+  edge: Edge,
   MATCH: string,
   direction: Direction,
-  nodes: NodeStore[],
-  edges: EdgeStore[],
+  nodes: Node[],
+  edges: Edge[],
 ) => {
   if (edge === undefined) return null;
   const nextDirectionNode: string =
@@ -71,11 +70,11 @@ const edgeNext = (
 };
 
 const nodeNext = (
-  node: NodeStore,
+  node: Node,
   MATCH: string,
   direction: Direction,
-  nodes: NodeStore[],
-  edges: EdgeStore[],
+  nodes: Node[],
+  edges: Edge[],
 ) => {
   const nextDirectionRelationship: string[] =
     direction === "TARGET" ? node.outRelationship : node.inRelationship;
