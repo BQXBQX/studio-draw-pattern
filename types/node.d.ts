@@ -5,8 +5,8 @@ export interface Node {
   labels?: string[];
   properties?: Property[];
   variables?: string[];
-  inRelationship?: string[];
-  outRelationship?: string[];
+  inRelations: string[];
+  outRelations: string[];
   statement?: string;
   isErgodic?: boolean;
 }
