@@ -7,11 +7,9 @@ const generateNode = (nodes: Node[], variables: Variable[]): Node[] => {
     let statement: string = "";
     //  检测当前节点是否有variable,同时拿到variable的name
     const currentVariable = variables.find(
-      (variable) =>
-        // TODO: 这里只完成了每个node只有一个variable的情况
-        node.variables && variable.variableKey === node.variables[0],
+      (variable) => node.variables && variable.variableKey === node.variables,
     );
-    statement += currentVariable?.name;
+    if (currentVariable?.name) statement += currentVariable.name;
     // 拿到当前节点的所有的label
     node.labels?.forEach((label, index) => {
       statement = statement + `:${label}`;

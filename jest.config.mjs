@@ -10,11 +10,22 @@ const config = {
   preset: "ts-jest",
   // Stop running tests after `n` failures
   // bail: 0,
+  transform: {
+    // '^.+\\.[tj]sx?$' to process ts,js,tsx,jsx with `ts-jest`
+    // '^.+\\.m?[tj]sx?$' to process ts,js,tsx,jsx,mts,mjs,mtsx,mjsx with `ts-jest`
+    "^.+\\.tsx?$": [
+      "ts-jest",
+      {
+        useESM: true,
+      },
+    ],
+  },
   // The directory where Jest should store its cached dependency information
   // cacheDirectory: "/private/var/folders/v8/b72xlzgd3nnbnjxm1mg0651c0000gn/T/jest_dx",
 
   // Automatically clear mock calls, instances, contexts and results before every test
   // clearMocks: false,
+
   // Indicates whether the coverage information should be collected while executing the test
   // collectCoverage: false,
 

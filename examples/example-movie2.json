@@ -1,0 +1,146 @@
+{
+  "nodes": [
+    {
+      "nodeKey": "node-6",
+      "labels": [
+        "Movie"
+      ],
+      "properties": [
+        {
+          "name": "name",
+          "value": "The Matrix",
+          "type": "string"
+        },
+        {
+          "name": "year",
+          "value": 1999,
+          "type": "number"
+        }
+      ],
+      "variables": "variable-3",
+      "outRelations": [],
+      "inRelations": [
+        "relationship-9",
+        "relationship-10",
+        "relationship-11"
+      ]
+    },
+    {
+      "nodeKey": "node-7",
+      "labels": [
+        "Person",
+        "Director"
+      ],
+      "properties": [
+        {
+          "name": "name",
+          "value": "Lana Wachowski",
+          "type": "string"
+        },
+        {
+          "name": "age",
+          "value": 55,
+          "type": "number"
+        }
+      ],
+      "variables": "variable-4",
+      "outRelations": [
+        "relationship-12",
+        "relationship-13"
+      ],
+      "inRelations": [
+        "relationship-9",
+        "relationship-14"
+      ]
+    },
+    {
+      "nodeKey": "node-8",
+      "labels": [
+        "Person",
+        "Actor"
+      ],
+      "properties": [
+        {
+          "name": "name",
+          "value": "Keanu Reeves",
+          "type": "string"
+        },
+        {
+          "name": "age",
+          "value": 57,
+          "type": "number"
+        }
+      ],
+      "variables": "variable-5",
+      "outRelations": [
+        "relationship-11",
+        "relationship-13"
+      ],
+      "inRelations": [
+        "relationship-10",
+        "relationship-12"
+      ]
+    }
+  ],
+  "variables": [
+    {
+      "variableKey": "variable-3",
+      "name": "n3",
+      "type": "object",
+      "belongType": "node",
+      "belongKey": "node-6"
+    },
+    {
+      "variableKey": "variable-4",
+      "name": "n4",
+      "type": "object",
+      "belongType": "node",
+      "belongKey": "node-7"
+    },
+    {
+      "variableKey": "variable-5",
+      "name": "n5",
+      "type": "object",
+      "belongType": "node",
+      "belongKey": "node-8"
+    }
+  ],
+  "relations": [
+    {
+      "relationKey": "relationship-9",
+      "type": "OWNER",
+      "targetNode": "node-6",
+      "sourceNode": "node-7"
+    },
+    {
+      "relationKey": "relationship-10",
+      "type": "DIRECTED",
+      "targetNode": "node-6",
+      "sourceNode": "node-8"
+    },
+    {
+      "relationKey": "relationship-11",
+      "type": "ACTED_IN",
+      "targetNode": "node-6",
+      "sourceNode": "node-8"
+    },
+    {
+      "relationKey": "relationship-12",
+      "type": "DIRECTOR_FRIEND",
+      "targetNode": "node-7",
+      "sourceNode": "node-8"
+    },
+    {
+      "relationKey": "relationship-13",
+      "type": "ACTOR_FRIEND",
+      "targetNode": "node-8",
+      "sourceNode": "node-7"
+    },
+    {
+      "relationKey": "relationship-14",
+      "type": "MATHER",
+      "targetNode": "node-7",
+      "sourceNode": "node-6"
+    }
+  ]
+}

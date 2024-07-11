@@ -12,9 +12,7 @@
           "type": "string"
         }
       ],
-      "variables": [
-        "variable-1"
-      ],
+      "variables": "variable-1",
       "outRelations": [],
       "inRelations": [
         "relationship-3",
@@ -41,9 +39,7 @@
           "type": "number"
         }
       ],
-      "variables": [
-        "variable-2"
-      ],
+      "variables": "variable-2",
       "outRelations": [
         "relationship-2",
         "relationship-4",
@@ -72,9 +68,7 @@
           "type": "number"
         }
       ],
-      "variables": [
-        "variable-0"
-      ],
+      "variables": "variable-0",
       "outRelations": [
         "relationship-3",
         "relationship-6"
@@ -162,7 +156,7 @@
       "targetNode": "node-1",
       "sourceNode": "node-2"
     },
-    { 
+    {
       "relationKey": "relationship-2",
       "type": "FRIEND",
       "targetNode": "node-3",
