@@ -14,6 +14,8 @@ const generateMATCH = (nodes: Node[], edges: Edge[]): string[] => {
   let MATCHs: string[] = [];
   while (edges.length !== 0) {
     const startEdge = edges[0];
+    console.log(startEdge);
+
     let MATCH: string = startEdge.statement!;
     // 进行targetNode进行遍历
     ({ edges, MATCH } = ergodicNode(startEdge, MATCH, "TARGET", nodes, edges));
@@ -57,22 +59,31 @@ const deleteEdge = (edges: Edge[], deleteEdge: Edge): Edge[] => {
   return edges.filter((edge) => edge !== deleteEdge);
 };
 
+type Arrow = "->" | "<-";
+
 const edgeNext = (
   edge: Edge,
   MATCH: string,
   direction: Direction,
   nodes: Node[],
   edges: Edge[],
+  arrow: Arrow = "->",
 ): ReturnValueProps | null => {
   // 拿到当前边界的targe或者source节点
-  const nextDirectionNode: string =
-    direction === "TARGET" ? edge.targetNode : edge.sourceNode;
+  let nextDirectionNode: string = "";
+  if (direction === "TARGET") {
+    if (arrow === "->") nextDirectionNode = edge.targetNode;
+    else nextDirectionNode = edge.sourceNode;
+  } else {
+    if (arrow === "->") nextDirectionNode = edge.sourceNode;
+    else nextDirectionNode = edge.targetNode;
+  }
   const nextNode = nodes.find((node) => node.nodeKey === nextDirectionNode);
   if (nextNode) {
     // 进行字符串拼接
     direction === "TARGET"
-      ? (MATCH += `->${nextNode?.statement}`)
-      : (MATCH = `${nextNode.statement}->` + MATCH);
+      ? (MATCH += `${arrow}${nextNode?.statement}`)
+      : (MATCH = `${nextNode.statement}${arrow}` + MATCH);
     edges = deleteEdge(edges, edge);
   } else return null;
   return { MATCH, edges, nextNode };
@@ -85,8 +96,10 @@ const nodeNext = (
   nodes: Node[],
   edges: Edge[],
 ) => {
-  const nextDirectionRelations: string[] =
-    direction === "TARGET" ? node.outRelations : node.inRelations;
+  const nextDirectionRelations: string[] = [
+    ...node.inRelations,
+    ...node.outRelations,
+  ];
   // 判断当前节点是否还有relations
   if (nextDirectionRelations.length !== 0) {
     const relationsKeysArray: string[] = edges.map(
@@ -105,11 +118,23 @@ const nodeNext = (
 
     edges = deleteEdge(edges, nextEdge!);
     // 进行字符串拼接
+    const arrow = node.outRelations.find(
+      (item) => item === nextEdge.relationKey,
+    )
+      ? "->"
+      : "<-";
     direction === "TARGET"
-      ? (MATCH += `->${nextEdge?.statement}`)
-      : (MATCH = `${nextEdge?.statement}->` + MATCH);
+      ? (MATCH += `${arrow}${nextEdge?.statement}`)
+      : (MATCH = `${nextEdge?.statement}${arrow}` + MATCH);
     // 调用degeNext再次进行拼接
-    const returnEdgeValue = edgeNext(nextEdge, MATCH, direction, nodes, edges);
+    const returnEdgeValue = edgeNext(
+      nextEdge,
+      MATCH,
+      direction,
+      nodes,
+      edges,
+      arrow,
+    );
     return returnEdgeValue;
   } else return null;
 };
