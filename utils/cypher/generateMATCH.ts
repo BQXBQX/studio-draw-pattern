@@ -44,6 +44,7 @@ const generateMATCH = (
   return MATCHs;
 };
 
+// 当节点遍历过后将isErgodic设置为true,再次使用时可以直接用变量替代
 const changeErgodicNode = (nodes: Node[], node: Node): Node[] => {
   const nodeIndex = nodes.findIndex((item) => item.nodeKey === node.nodeKey);
   nodes[nodeIndex].isErgodic = true;
@@ -114,6 +115,7 @@ const edgeNext = (
     } else nextDirectionNode = edge.targetNode;
   }
   const nextNode = nodes.find((node) => node.nodeKey === nextDirectionNode);
+  // 检测是否可以用变量替代
   const renderNode =
     nextNode?.isErgodic && nextNode.variables
       ? `(${variables.find((item) => item.variableKey === nextNode.variables)?.name})`
@@ -157,7 +159,6 @@ const nodeNext = (
     ) as Edge;
 
     edges = deleteEdge(edges, nextEdge!);
-    // 进行字符串拼接
     const nextRelations =
       direction === "TARGET" ? node.outRelations : node.inRelations;
 
@@ -172,6 +173,7 @@ const nodeNext = (
       (direction === "SOURCE" && arrow === "<-")
     )
       renderArrow = "-";
+    // 进行字符串拼接
     direction === "TARGET"
       ? (MATCH += `${renderArrow}${nextEdge?.statement}`)
       : (MATCH = `${nextEdge?.statement}${renderArrow}` + MATCH);
