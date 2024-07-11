@@ -11,6 +11,6 @@ let MATCHs: string[] = [];
 // 生成相关的node节点
 nodesArray = generateNode(data.nodes, data.variables);
 edgesArray = generateEdge(data.relations);
-MATCHs = generateMATCH(nodesArray, edgesArray);
+MATCHs = generateMATCH(nodesArray, edgesArray, data.variables);
 const language = MATCHs.join("\n");
 console.log(language);

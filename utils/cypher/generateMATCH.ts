@@ -1,6 +1,7 @@
 import type { Edge } from "../../types/edge";
 import type { Node } from "../../types/node";
 import hasIntersection from "../public_functions/hasIntersection";
+import data from "../../examples/example-movie.json";
 
 interface ReturnValueProps {
   MATCH: string;
@@ -8,22 +9,39 @@ interface ReturnValueProps {
   nextNode: Node;
 }
 
+type Arrow = "->" | "<-";
 type Direction = "TARGET" | "SOURCE";
 
 const generateMATCH = (nodes: Node[], edges: Edge[]): string[] => {
   let MATCHs: string[] = [];
   while (edges.length !== 0) {
     const startEdge = edges[0];
-    console.log(startEdge);
-
     let MATCH: string = startEdge.statement!;
     // 进行targetNode进行遍历
-    ({ edges, MATCH } = ergodicNode(startEdge, MATCH, "TARGET", nodes, edges));
+    ({ edges, MATCH, nodes } = ergodicNode(
+      startEdge,
+      MATCH,
+      "TARGET",
+      nodes,
+      edges,
+    ));
     // 进行sourceNode进行遍历
-    ({ edges, MATCH } = ergodicNode(startEdge, MATCH, "SOURCE", nodes, edges));
+    ({ edges, MATCH, nodes } = ergodicNode(
+      startEdge,
+      MATCH,
+      "SOURCE",
+      nodes,
+      edges,
+    ));
     MATCHs.push("MATCH " + MATCH);
   }
   return MATCHs;
+};
+
+const changeErgodicNode = (nodes: Node[], node: Node): Node[] => {
+  const nodeIndex = nodes.findIndex((item) => item.nodeKey === node.nodeKey);
+  nodes[nodeIndex].isErgodic = true;
+  return nodes;
 };
 
 // 对edge的target&source方向进行遍历
@@ -42,6 +60,7 @@ const ergodicNode = (
     edges,
   );
   while (returnValue !== null) {
+    nodes = changeErgodicNode(nodes, returnValue?.nextNode);
     edges = returnValue.edges;
     MATCH = returnValue.MATCH;
     returnValue = nodeNext(
@@ -52,14 +71,12 @@ const ergodicNode = (
       returnValue.edges,
     );
   }
-  return { edges, MATCH };
+  return { edges, MATCH, nodes };
 };
 
 const deleteEdge = (edges: Edge[], deleteEdge: Edge): Edge[] => {
   return edges.filter((edge) => edge !== deleteEdge);
 };
-
-type Arrow = "->" | "<-";
 
 const edgeNext = (
   edge: Edge,
@@ -71,19 +88,30 @@ const edgeNext = (
 ): ReturnValueProps | null => {
   // 拿到当前边界的targe或者source节点
   let nextDirectionNode: string = "";
+  let renderArrow: string = arrow;
+  // 对->和<-和-进行处理
   if (direction === "TARGET") {
     if (arrow === "->") nextDirectionNode = edge.targetNode;
-    else nextDirectionNode = edge.sourceNode;
+    else {
+      nextDirectionNode = edge.sourceNode;
+      renderArrow = "-";
+    }
   } else {
-    if (arrow === "->") nextDirectionNode = edge.sourceNode;
-    else nextDirectionNode = edge.targetNode;
+    if (arrow === "->") {
+      nextDirectionNode = edge.sourceNode;
+      renderArrow = "-";
+    } else nextDirectionNode = edge.targetNode;
   }
   const nextNode = nodes.find((node) => node.nodeKey === nextDirectionNode);
+  const renderNode =
+    nextNode?.isErgodic && nextNode.variables
+      ? `(${data.variables.find((item) => item.variableKey === nextNode.variables)?.name})`
+      : nextNode?.statement;
   if (nextNode) {
     // 进行字符串拼接
     direction === "TARGET"
-      ? (MATCH += `${arrow}${nextNode?.statement}`)
-      : (MATCH = `${nextNode.statement}${arrow}` + MATCH);
+      ? (MATCH += `${renderArrow}${renderNode}`)
+      : (MATCH = `${renderNode}${renderArrow}` + MATCH);
     edges = deleteEdge(edges, edge);
   } else return null;
   return { MATCH, edges, nextNode };
@@ -123,9 +151,16 @@ const nodeNext = (
     )
       ? "->"
       : "<-";
+    // 对->和<-和-进行处理
+    let renderArrow = arrow;
+    if (
+      (direction === "TARGET" && arrow === "->") ||
+      (direction === "SOURCE" && arrow === "<-")
+    )
+      renderArrow = "-";
     direction === "TARGET"
-      ? (MATCH += `${arrow}${nextEdge?.statement}`)
-      : (MATCH = `${nextEdge?.statement}${arrow}` + MATCH);
+      ? (MATCH += `${renderArrow}${nextEdge?.statement}`)
+      : (MATCH = `${nextEdge?.statement}${renderArrow}` + MATCH);
     // 调用degeNext再次进行拼接
     const returnEdgeValue = edgeNext(
       nextEdge,
