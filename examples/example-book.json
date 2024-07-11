@@ -23,7 +23,9 @@
         }
       ],
       "variables": "variable-6",
-      "outRelations": [],
+      "outRelations": [
+        "relationship-17"
+      ],
       "inRelations": [
         "relationship-15",
         "relationship-16"
@@ -49,10 +51,11 @@
       ],
       "variables": "variable-7",
       "outRelations": [
-        "relationship-17"
+        "relationship-15",
+        "relationship-16"
       ],
       "inRelations": [
-        "relationship-15"
+        "relationship-17"
       ]
     }
   ],
@@ -83,7 +86,7 @@
       "relationKey": "relationship-16",
       "type": "READER",
       "targetNode": "node-9",
-      "sourceNode": "node-7"
+      "sourceNode": "node-10"
     },
     {
       "relationKey": "relationship-17",
