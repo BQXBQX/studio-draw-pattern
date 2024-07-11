@@ -17,19 +17,19 @@ const generateMATCH = (nodes: Node[], edges: Edge[]): string[] => {
   while (edges.length !== 0) {
     const startEdge = edges[0];
     let MATCH: string = startEdge.statement!;
-    // 进行targetNode进行遍历
-    ({ edges, MATCH, nodes } = ergodicNode(
-      startEdge,
-      MATCH,
-      "TARGET",
-      nodes,
-      edges,
-    ));
     // 进行sourceNode进行遍历
     ({ edges, MATCH, nodes } = ergodicNode(
       startEdge,
       MATCH,
       "SOURCE",
+      nodes,
+      edges,
+    ));
+    // 进行targetNode进行遍历
+    ({ edges, MATCH, nodes } = ergodicNode(
+      startEdge,
+      MATCH,
+      "TARGET",
       nodes,
       edges,
     ));
@@ -146,9 +146,9 @@ const nodeNext = (
 
     edges = deleteEdge(edges, nextEdge!);
     // 进行字符串拼接
-    const arrow = node.outRelations.find(
-      (item) => item === nextEdge.relationKey,
-    )
+    const nextRelations =
+      direction === "TARGET" ? node.outRelations : node.inRelations;
+    const arrow = nextRelations.find((item) => item === nextEdge.relationKey)
       ? "->"
       : "<-";
     // 对->和<-和-进行处理
