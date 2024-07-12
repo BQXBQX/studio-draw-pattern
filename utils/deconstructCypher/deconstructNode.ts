@@ -1,5 +1,6 @@
 import { Node } from "../../types/node";
 import { Property } from "../../types/property";
+import deconstructVariable from "./deconstructVariable";
 
 const deconstructNode = (nodes: RegExpMatchArray | null): Node[] => {
   if (nodes === null) return [];
@@ -44,6 +45,13 @@ const deconstructNode = (nodes: RegExpMatchArray | null): Node[] => {
       }
     });
     propertyArray.length && (returnNodes[nodeIndex].properties = propertyArray);
+    // deconstruct variable
+    const variable = deconstructVariable(
+      node,
+      "NODE",
+      returnNodes[nodeIndex].nodeKey,
+    );
+    variable && (returnNodes[nodeIndex].variables = variable.variableKey);
   });
   return returnNodes;
 };
