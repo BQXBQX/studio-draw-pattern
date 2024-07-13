@@ -21,12 +21,13 @@ const deconstructEdge = (nodes: Node[], edges: RegExpMatchArray | null) => {
       type: type![0],
     });
   });
+
   returnEdges.forEach((item) => {
     const sourceNode = nodes.findIndex(
       (node) => node.nodeKey === item.sourceNode,
     );
     const targetNode = nodes.findIndex(
-      (node) => (node.nodeKey = item.targetNode),
+      (node) => node.nodeKey === item.targetNode,
     );
     nodes[sourceNode].outRelations.push(item.relationKey);
     nodes[targetNode].inRelations.push(item.relationKey);

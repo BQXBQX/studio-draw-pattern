@@ -29,8 +29,9 @@ const generateNode = (nodes: Node[], variables: Variable[]): Node[] => {
       propertiesArray.push(propertyStatement);
     });
     // 将所有的字符串拼接获得当前的节点的字段
-    statement =
-      "(" + statement + " {" + `${propertiesArray.join(",")}` + "}" + ")";
+    const propertiesStatement =
+      propertiesArray.length !== 0 ? ` {${propertiesArray.join(",")}}` : "";
+    statement = "(" + statement + propertiesStatement + ")";
     returnNodes.push({
       ...node,
       statement: statement,

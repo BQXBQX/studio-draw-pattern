@@ -14,13 +14,16 @@ const deconstructMATCH = async (query: string) => {
   const returnEdge = deconstructEdge(nodesJSON, paths);
   const edgesJSON = returnEdge.returnEdges;
   nodesJSON = returnEdge.nodes;
+  // console.log(nodesJSON);
   const totalJSON = JSON.stringify({
     nodes: nodesJSON,
     relations: edgesJSON,
   });
-  console.log(totalJSON);
+  // console.log(totalJSON);
 
-  await Bun.write("../../examples/example-test.json", totalJSON);
+  const bytes = await Bun.write("./examples/example-test.json", totalJSON);
+
+  // await Bun.write("../../examples/example-test.json", totalJSON);
 };
 
 export default deconstructMATCH;
