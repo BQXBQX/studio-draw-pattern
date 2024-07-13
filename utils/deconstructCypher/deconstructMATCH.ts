@@ -4,8 +4,7 @@ import deconstructNode from "./deconstructNode";
 import deconstructVariable from "./deconstructVariable";
 
 const deconstructMATCH = async (query: string) => {
-  const str =
-    "MATCH (:Person:Director:Woman:Mather {name: 'Anna',age:34,sex:'woman'})-[:KNOWS]->(:Person)-[:FATHER]->(:Person)";
+  const str = query;
   const nodeRegexp = /\(.+?\)/g;
   const pathRegexp = /\<?-\[.+?\]-\>?/g;
   const nodes: RegExpMatchArray | null = str.match(nodeRegexp);
@@ -18,12 +17,9 @@ const deconstructMATCH = async (query: string) => {
   const totalJSON = JSON.stringify({
     nodes: nodesJSON,
     relations: edgesJSON,
+    variables: [],
   });
-  // console.log(totalJSON);
-
-  const bytes = await Bun.write("./examples/example-test.json", totalJSON);
-
-  // await Bun.write("../../examples/example-test.json", totalJSON);
+  return totalJSON;
 };
 
 export default deconstructMATCH;

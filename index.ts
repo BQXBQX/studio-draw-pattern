@@ -1,42 +1,54 @@
 #! /usr/bin/env bun
 
 import { Command } from "commander";
+import type { Edge } from "./types/edge";
+import type { Node } from "./types/node";
+import generateEdge from "./utils/cypher/generateEdge";
+import generateMATCH from "./utils/cypher/generateMATCH";
+import generateNode from "./utils/cypher/generateNode";
+import deconstructMATCH from "./utils/deconstructCypher/deconstructMATCH";
+
 const program = new Command();
 program
   .name("GenerateQuery")
   .version("0.01")
-  .description("generate Cypher&Gremlin with GPE");
+  .description("generate Cypher&Gremlin with design GPE JSON");
 
 program
-  .command("split")
-  .description("Split a string into substrings and display as an array")
-  .argument("<string>", "string to split")
-  .option("--first", "display just the first substring")
-  .option("-s, --separator <char>", "separator character", ",")
-  .action((str, options) => {
-    const limit = options.first ? 1 : undefined;
-    console.log(str.split(options.separator, limit));
+  .command("generate")
+  .description("generate query language with pointed JSON file")
+  .argument("<string>", "JSON file path")
+  .option("--cypher", "generate cypher language")
+  .option("--gremlin", "generate gremlin language, Not developed yet.")
+  .action(async (str: string) => {
+    const file = Bun.file(str);
+    const content = await file.text();
+    const contentJSON = JSON.parse(content);
+    let nodesArray: Node[] = [];
+    let edgesArray: Edge[] = [];
+    let laguages: string[] = [];
+    let MATCHs: string[] = [];
+    // 生成相关的node节点
+    nodesArray = generateNode(contentJSON.nodes, contentJSON.variables);
+    edgesArray = generateEdge(contentJSON.relations);
+    MATCHs = generateMATCH(nodesArray, edgesArray, contentJSON.variables);
+    const language = MATCHs.join("\n");
+    console.log(language);
+  });
+
+program
+  .command("deconstruct")
+  .description("deconstruct query language")
+  .argument("<string>", "language sentence")
+  .argument("<string>", "write file path")
+  .option("--cypher", "deconstruct cypher language")
+  .option("--gremlin", "deconstruct gremlin language, Not developed yet.")
+  .action(async (language: string, writePath: string) => {
+    const totalJSON = await deconstructMATCH(language);
+    await Bun.write(writePath, totalJSON);
   });
 
 program.parse();
-
-// import data from "./examples/example-test.json";
-
-// import type { Edge } from "./types/edge";
-// import type { Node } from "./types/node";
-// import generateEdge from "./utils/cypher/generateEdge";
-// import generateMATCH from "./utils/cypher/generateMATCH";
-// import generateNode from "./utils/cypher/generateNode";
-// let nodesArray: Node[] = [];
-// let edgesArray: Edge[] = [];
-// let laguages: string[] = [];
-// let MATCHs: string[] = [];
-// // 生成相关的node节点
-// nodesArray = generateNode(data.nodes, data.variables);
-// edgesArray = generateEdge(data.relations);
-// MATCHs = generateMATCH(nodesArray, edgesArray, data.variables);
-// const language = MATCHs.join("\n");
-// console.log(language);
 
 // import deconstructMATCH from "./utils/deconstructCypher/deconstructMATCH";
 //
