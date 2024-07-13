@@ -20,7 +20,7 @@ bun install
 
 # 将脚本link到项目中
 bun link
-bun link: generate_query
+bun link generate_query
 
 # 测试用例： 根据语言生成GPE JSON
 bun x generate_query deconstruct --cypher  "MATCH (:Person:Director:Woman:Mather {name: 'Anna',age:34,sex:'woman'})-[:KNOWS]->(:Person)-[:FATHER]->(:Person)" ./examples/test.json
