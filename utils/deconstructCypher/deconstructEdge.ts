@@ -1,6 +1,7 @@
 import { Edge } from "../../types/edge";
 import { Node } from "../../types/node";
 import { Variable } from "../../types/variable";
+import deconstructProperty from "./deconstructProperty";
 import deconstructVariable from "./deconstructVariable";
 
 const deconstructEdge = (
@@ -34,6 +35,9 @@ const deconstructEdge = (
       returnEdges[edgeIndex].variable = variable.variableKey;
       returnVariables.push(variable);
     }
+    const propertyArrary = deconstructProperty(edge);
+    propertyArrary.length !== 0 &&
+      (returnEdges[edgeIndex].properties = propertyArrary);
   });
 
   returnEdges.forEach((item) => {
