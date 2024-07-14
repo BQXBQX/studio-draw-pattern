@@ -1,3 +1,5 @@
+import { Property } from "./property";
+
 export interface Edge {
   relationKey: string;
   type?: string;
@@ -5,4 +7,5 @@ export interface Edge {
   sourceNode: string;
   statement?: string;
   variable?: string;
+  properties?: Property[];
 }

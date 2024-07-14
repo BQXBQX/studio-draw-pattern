@@ -1,5 +1,6 @@
 import type { Node } from "../../types/node";
 import type { Variable } from "../../types/variable";
+import generateProperty from "./generateProperty";
 
 const generateNode = (nodes: Node[], variables: Variable[]): Node[] => {
   let returnNodes: Node[] = [];
@@ -14,21 +15,8 @@ const generateNode = (nodes: Node[], variables: Variable[]): Node[] => {
     node.labels?.forEach((label, index) => {
       statement = statement + `:${label}`;
     });
+    const propertiesArray: string[] = generateProperty(node);
     // 拿到当前节点的所有的property
-    let propertiesArray: string[] = [];
-    node.properties?.forEach((property, index) => {
-      let propertyStatement: string = "";
-      propertyStatement += property.name;
-      // 当value为字符串时需要在value的两边加上引号""
-      if (typeof property.value === "number") {
-        propertyStatement += `:${property.value}`;
-        // 当value为数字类型时value的两边直接引用不用引号""
-      } else {
-        propertyStatement += `:"${property.value}"`;
-      }
-      propertiesArray.push(propertyStatement);
-    });
-    // 将所有的字符串拼接获得当前的节点的字段
     const propertiesStatement =
       propertiesArray.length !== 0 ? ` {${propertiesArray.join(",")}}` : "";
     statement = "(" + statement + propertiesStatement + ")";

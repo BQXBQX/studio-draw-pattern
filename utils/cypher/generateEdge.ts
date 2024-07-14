@@ -1,5 +1,6 @@
 import type { Edge } from "../../types/edge";
 import { Variable } from "../../types/variable";
+import generateProperty from "./generateProperty";
 
 const generateEdge = (edges: Edge[], variables: Variable[]): Edge[] => {
   let returnEdges: Edge[] = [];
@@ -8,8 +9,11 @@ const generateEdge = (edges: Edge[], variables: Variable[]): Edge[] => {
     const variableIndex: number = variables.findIndex(
       (variable, index) => variable.variableKey === edge.variable,
     );
+    const propertiesArray = generateProperty(edge);
+    const propertiesStatement =
+      propertiesArray.length !== 0 ? ` {${propertiesArray.join(",")}}` : "";
 
-    const statement: string = `[${edge.variable ? variables[variableIndex].name : ""}${edge.type ? `:${edge.type}` : ""}]`;
+    const statement: string = `[${edge.variable ? variables[variableIndex].name : ""}${edge.type ? `:${edge.type}` : ""}${propertiesStatement}]`;
 
     returnEdges.push({
       ...edge,
