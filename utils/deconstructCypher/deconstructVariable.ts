@@ -6,7 +6,7 @@ const deconstructVariable = (
   belong: VariableBelong,
   nodeKey: string,
 ): Variable | null => {
-  const variableRegexp = /(?<=[\(\[])[\d\w]+(?=\:)/g;
+  const variableRegexp = /(?<=[\(\[])[\d\w]+(?=[\:\)\]])/g;
   const variable = sentence.match(variableRegexp);
   if (!variable) return null;
   return {

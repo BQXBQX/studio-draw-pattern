@@ -9,7 +9,7 @@ const generateEdge = (edges: Edge[], variables: Variable[]): Edge[] => {
       (variable, index) => variable.variableKey === edge.variable,
     );
 
-    const statement: string = `[${edge.variable ? variables[variableIndex].name : ""}:${edge.type ? edge.type : ""}]`;
+    const statement: string = `[${edge.variable ? variables[variableIndex].name : ""}${edge.type ? `:${edge.type}` : ""}]`;
 
     returnEdges.push({
       ...edge,
