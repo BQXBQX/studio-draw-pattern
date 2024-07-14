@@ -4,7 +4,7 @@
   "type": "module",
   "main": "./index.ts",
   "bin": {
-    "generate_query": "./index.ts"
+    "generate_query": "./bin/index.ts"
   },
   "peerDependencies": {
     "typescript": "^5.5.3"
