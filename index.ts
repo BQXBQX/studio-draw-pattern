@@ -30,7 +30,7 @@ program
     let MATCHs: string[] = [];
     // 生成相关的node节点
     nodesArray = generateNode(contentJSON.nodes, contentJSON.variables);
-    edgesArray = generateEdge(contentJSON.relations);
+    edgesArray = generateEdge(contentJSON.relations, contentJSON.variables);
     MATCHs = generateMATCH(nodesArray, edgesArray, contentJSON.variables);
     const language = MATCHs.join("\n");
     console.log(language);

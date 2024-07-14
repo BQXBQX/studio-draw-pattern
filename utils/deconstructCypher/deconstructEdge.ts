@@ -1,7 +1,13 @@
 import { Edge } from "../../types/edge";
 import { Node } from "../../types/node";
+import { Variable } from "../../types/variable";
+import deconstructVariable from "./deconstructVariable";
 
-const deconstructEdge = (nodes: Node[], edges: RegExpMatchArray | null) => {
+const deconstructEdge = (
+  nodes: Node[],
+  edges: RegExpMatchArray | null,
+): { returnEdges: Edge[]; nodes: Node[]; returnVariables: Variable[] } => {
+  let returnVariables: Variable[] = [];
   const typeRegexp = /(?<=\:)[\d\w\s]+?(?=[\{\]\s])/g;
   const nextRegexp = />$/g;
   let returnEdges: Edge[] = [];
@@ -13,13 +19,21 @@ const deconstructEdge = (nodes: Node[], edges: RegExpMatchArray | null) => {
       targetNode = nodes[edgeIndex + 1];
       sourceNode = nodes[edgeIndex];
     }
-    // TODO:type will be null
     returnEdges.push({
       relationKey: `${edge}+${edgeIndex}`,
       targetNode: targetNode.nodeKey,
       sourceNode: sourceNode.nodeKey,
-      type: type![0],
+      type: type ? type[0] : "",
     });
+    const variable = deconstructVariable(
+      edge,
+      "RELATION",
+      returnEdges[edgeIndex].relationKey,
+    );
+    if (variable) {
+      returnEdges[edgeIndex].variable = variable.variableKey;
+      returnVariables.push(variable);
+    }
   });
 
   returnEdges.forEach((item) => {
@@ -32,7 +46,8 @@ const deconstructEdge = (nodes: Node[], edges: RegExpMatchArray | null) => {
     nodes[sourceNode].outRelations.push(item.relationKey);
     nodes[targetNode].inRelations.push(item.relationKey);
   });
-  return { returnEdges, nodes };
+
+  return { returnEdges, nodes, returnVariables };
 };
 
 export default deconstructEdge;

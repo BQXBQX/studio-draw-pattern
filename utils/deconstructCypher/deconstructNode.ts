@@ -1,10 +1,14 @@
 import { Node } from "../../types/node";
 import { Property } from "../../types/property";
+import { Variable } from "../../types/variable";
 import deconstructVariable from "./deconstructVariable";
 
-const deconstructNode = (nodes: RegExpMatchArray | null): Node[] => {
-  if (nodes === null) return [];
+const deconstructNode = (
+  nodes: RegExpMatchArray | null,
+): { returnNodes: Node[]; returnVariables: Variable[] } | null => {
+  if (nodes === null) return null;
   const returnNodes: Node[] = [];
+  const returnVariables: Variable[] = [];
   const labelsRegexp = /\:[\d\w\s\:]+?(?=[\{\)])/g;
   const labelRegexp = /(?<=\:)[\d\w]+/g;
   const propertiesRegexp = /\{.+\}/g;
@@ -51,9 +55,12 @@ const deconstructNode = (nodes: RegExpMatchArray | null): Node[] => {
       "NODE",
       returnNodes[nodeIndex].nodeKey,
     );
-    variable && (returnNodes[nodeIndex].variables = variable.variableKey);
+    if (variable) {
+      returnNodes[nodeIndex].variables = variable.variableKey;
+      returnVariables.push(variable);
+    }
   });
-  return returnNodes;
+  return { returnNodes, returnVariables };
 };
 
 export default deconstructNode;

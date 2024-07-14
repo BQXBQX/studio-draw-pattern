@@ -10,10 +10,8 @@ const deconstructVariable = (
   const variable = sentence.match(variableRegexp);
   if (!variable) return null;
   return {
-    // TODO: type 的设计还需要考虑
     variableKey: `${variable[0]}-${sentence}`,
     name: variable[0],
-    type: "Object",
     belongKey: nodeKey,
     belongType: belong,
   };
