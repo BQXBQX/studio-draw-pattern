@@ -28,3 +28,5 @@ bun x generate_query deconstruct --cypher  "MATCH (:Person:Director:Woman:Mather
 # 测试用例： 根据GPE JSON 生成语言
 bun x generate_query generate --cypher ./examples/test.json
 ```
+
+⚠️ Warning 目前实现了cypher MATCH语句的双向转换
