@@ -38,7 +38,7 @@ program
 
 program
   .command("deconstruct")
-  .description("deconstruct query language")
+  .description("deconstruct query language and put the JSON to point file")
   .argument("<string>", "language sentence")
   .argument("<string>", "write file path")
   .option("--cypher", "deconstruct cypher language")
