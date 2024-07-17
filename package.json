@@ -1,5 +1,5 @@
 {
-  "name": "generate_query",
+  "name": "studio-draw-pattern",
   "module": "index.ts",
   "type": "module",
   "main": "./index.ts",

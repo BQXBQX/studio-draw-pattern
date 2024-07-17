@@ -1,4 +1,4 @@
-# 📊 Generate_Query
+# 📊 studio-draw-pattern
 
 双向解析图数据库查询语言工具库
 
