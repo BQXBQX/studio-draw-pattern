@@ -4,7 +4,7 @@ export interface Node {
   nodeKey: string;
   labels?: string[];
   properties?: Property[];
-  variables?: string;
+  variable?: string;
   inRelations: string[];
   outRelations: string[];
   statement?: string;
