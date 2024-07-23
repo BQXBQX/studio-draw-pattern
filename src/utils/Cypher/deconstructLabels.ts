@@ -1,4 +1,4 @@
-export const useDeconstructLabels = (labelsWord: string): string[] => {
+export const deconstructLabels = (labelsWord: string): string[] => {
   const labelRegexp = /(?<=\:)[\w\d]+/gi;
   const labels: RegExpMatchArray | null = labelsWord.match(labelRegexp);
   if (!labels)
