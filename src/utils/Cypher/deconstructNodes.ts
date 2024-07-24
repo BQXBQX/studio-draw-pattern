@@ -1,8 +1,9 @@
 import { deconstructLabels } from "./deconstructLabels";
-import { deconstructProperty } from "./deconstructProperty";
+import { deconstructProperties } from "./deconstructProperties";
 import { Property } from "../../types/property";
 import { Node } from "../../types/node";
 import { editNode } from "../../stores/nodesStore";
+import { deconstructVariables } from "./deconstructVariables";
 
 export const deconstructNodes = (nodeWords: string[]) => {
   const labelsRegexp = /\:[\d\w\s\:]+?(?=[\{\)])/g;
@@ -19,16 +20,20 @@ export const deconstructNodes = (nodeWords: string[]) => {
     let properties: Property[] = [];
     const propertiesWord: RegExpMatchArray | null =
       nodeWord.match(propertiesRegexp);
-    if (propertiesWord) properties = deconstructProperty(propertiesWord[0]);
+    if (propertiesWord) properties = deconstructProperties(propertiesWord[0]);
 
+    const nodeKey = `${nodeWord}-${index}`;
     const newNode: Node = {
-      nodeKey: `${nodeWord}-${index}`,
+      nodeKey: nodeKey,
       inRelations: [],
       outRelations: [],
       labels: labels,
       properties: properties,
+      statement: nodeWord,
     };
 
     editNode(newNode);
+
+    deconstructVariables(nodeWord, "NODE", nodeKey);
   });
 };

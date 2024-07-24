@@ -1,6 +1,6 @@
 import { Property } from "../../types/property";
 
-export const deconstructProperty = (propertiesWord: string): Property[] => {
+export const deconstructProperties = (propertiesWord: string): Property[] => {
   const propertyRegexp = /(?<=[\{\,]).+?(?=[\,\}])/gi;
   const nameRegexp = /.+?(?=\:)/gi;
   const numberRegexp = /(?<=\:\s*)\d+?/;
@@ -9,7 +9,8 @@ export const deconstructProperty = (propertiesWord: string): Property[] => {
     propertiesWord.match(propertyRegexp);
   if (!propertyWords)
     throw new Error(
-      `当前输入的properties语句没有property, 请检查输入, 当前输入值为${propertyWords}`,
+      `当前输入的properties语句没有property, 请检查输入, 当前输入值为` +
+      propertiesWord,
     );
   const properties: Property[] = [];
   propertyWords.forEach((propertyWord) => {

@@ -1,7 +1,7 @@
 import { Property } from "./property";
 
 export interface Edge {
-  relationKey: string;
+  edgeKey: string;
   type?: string;
   targetNode: string;
   sourceNode: string;

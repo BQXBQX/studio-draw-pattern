@@ -16,11 +16,11 @@ export const editNode = (node: Node) => {
   );
   if (isExist) {
     // 执行修改节点逻辑
-    const changeNode = node;
-    const changeNodeIndex = nodesState.nodes.findIndex(
-      (item) => item.nodeKey === changeNode.nodeKey,
+    const editNode = node;
+    const editNodeIndex = nodesState.nodes.findIndex(
+      (item) => item.nodeKey === editNode.nodeKey,
     );
-    nodesState.nodes[changeNodeIndex] = changeNode;
+    nodesState.nodes[editNodeIndex] = editNode;
   }
   // 执行添加节点的逻辑
   else nodesState.nodes.push(node);
@@ -41,4 +41,14 @@ export const clearNodes = () => {
   // 重置所有节点
   nodesState.nodes = [];
   console.log("清除所有节点");
+};
+
+// TODO:这里考虑每个节点的variable只有一个,如果可以是一个数组,后期再进行优化.
+export const addVariableByKey = (nodeKey: string, variableName: string) => {
+  const nodeIndex = nodesState.nodes.findIndex(
+    (item) => item.nodeKey === nodeKey,
+  );
+  if (nodeIndex === -1)
+    throw new Error("不存在当前节点, 请重新输入要输入的 varibale");
+  nodesState.nodes[nodeIndex].variable = variableName;
 };
