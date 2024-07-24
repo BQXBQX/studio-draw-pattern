@@ -1,7 +1,7 @@
 {
-  "name": "studio-draw-pattern",
+  "name": "@graphscope/studio-draw-pattern",
   "version": "0.0.1",
-  "description": "Experiment code for GrapeScope",
+  "description": "Experiment draw pattern code for GrapeScope",
   "module": "dist/esm/index.js",
   "types": "dist/esm/index.d.ts",
   "scripts": {
