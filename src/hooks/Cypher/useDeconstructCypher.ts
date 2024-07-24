@@ -1,6 +1,7 @@
 import { useEffect } from "react";
 import { deconstructMATCH } from "../../utils/Cypher/deconstructMATCH";
 import { clearNodes, nodesState } from "../../stores/nodesStore";
+import { edgesState } from "../../stores/edgesStore";
 
 // 希望传入的cypherWord是一个状态, 而不是一个简单的变量
 export const useDeconstructCypher = (cypherWord: string) => {
@@ -12,4 +13,8 @@ export const useDeconstructCypher = (cypherWord: string) => {
   useEffect(() => {
     console.log(nodesState.nodes);
   }, [nodesState.nodes]);
+
+  useEffect(() => {
+    console.log(edgesState.edges);
+  }, [edgesState.edges]);
 };
